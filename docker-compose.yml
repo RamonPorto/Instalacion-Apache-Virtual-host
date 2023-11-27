@@ -7,7 +7,7 @@ services:
     # Mapeamos el directorio raíz (equipo:contenedor)  
     volumes:
       - ./paginas:/usr/local/apache2/htdocs
-      - ./conf:/usr/local/apache2/conf   
+      - ./conf:/usr/local/apache2/conf     
     networks:
       red:
         ipv4_address: 192.168.1.14
@@ -19,9 +19,11 @@ services:
       - "53:53/tcp"
       - "53:53/udp"
       #Mapeo de puertos
+    dns:
+      - 192.168.1.2  
     networks:
       red:
-        ipv4_address: 192.168.1.1
+        ipv4_address: 192.168.1.2
     volumes:
       - ./configuracion:/etc/bind
       - ./zonas:/var/lib/bind
@@ -34,7 +36,7 @@ services:
     tty: true
     stdin_open: true
     dns:
-      - 192.168.1.1
+      - 192.168.1.2
     networks:
       red:
         ipv4_address: 192.168.1.33
@@ -44,4 +46,3 @@ networks:
       ipam:
         config:
           - subnet: 192.168.1.0/24
-            gateway: 192.168.1.254
