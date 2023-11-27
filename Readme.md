@@ -28,10 +28,38 @@ En él creamos un contenedor servidor apache, otro contenedor servidor dns y un 
 El fichero se encuentra subido en este mismo repositorio
 
 ## 5.Quinto paso
-Una vez hecho esto comprobaremos en el contenedor cliente si funciona correctamente mediante el comando dig. A continuación la sintaxis del comando:
+Añadimos los hosts virtuales en el fichero de configuración del apache *httpd.conf*
 
 ~~~
-dig 192.168.1.1 www.fabulasoscuras.com
+NameVirtualHost *:80
 
-dig 192.168.1.1 www.fabulasmaravillosas.com
+<VirtualHost *:80>
+    ServerName www.fabulasoscuras.int
+    DocumentRoot /usr/local/apache2/htdocs/fabulas_oscuras
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName www.fabulasmaravillosas.int
+    DocumentRoot /usr/local/apache2/htdocs/fabulas_maravillosas
+</VirtualHost>
 ~~~
+
+## 6.Sexto paso
+El último paso es comprobar en el contenedor cliente si funciona el servidor apache. Para ello instalaremos lynx con el siguente comando:
+
+~~~
+apt install lynx
+~~~
+
+Una vez instalado ejecutaremos los siguientes comandos:
+
+~~~
+
+lynx www.fabulasoscuras.int
+
+lynx www.fabulasmaravillosas.int
+
+~~~
+
+![Imágen del resultado del comando anterior](./Imágenes/Lynx_fabulas_maravillosas.png)
+![Imágen del resultado del comando anterior](./Imágenes/Lynx_fabulas_oscuras.png)
